@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Loica framework build toolchain}
   spec.description   = %q{Crossbuild MRuby apps to multiple targets}
-  spec.homepage      = "https://github.com/loica/loica-build"
+  spec.homepage      = "https://github.com/loicarb/loica-build"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = "exe"
