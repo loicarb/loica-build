@@ -1,7 +1,4 @@
 require "loica/build/version"
-
-module Loica
-  module Build
-    # Your code goes here...
-  end
-end
+require "loica/build/application"
+require "loica/build/target"
+require "loica/build/platforms"
