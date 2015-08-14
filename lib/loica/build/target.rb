@@ -1,4 +1,4 @@
-module Loica::Build  # :nodoc:
+module Loica::Build # :nodoc:
 
   # This represent's an application target build
   class Target < Configuration
