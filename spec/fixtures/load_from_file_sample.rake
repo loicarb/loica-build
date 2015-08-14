@@ -1,0 +1,1 @@
+LoadFromFileSample.new
