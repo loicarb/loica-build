@@ -1,0 +1,1 @@
+ConfigurationSample.new

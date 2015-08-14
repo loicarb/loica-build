@@ -1,28 +1,44 @@
 module Loica::Build
-  module Utils
+  # Represent's a configuration base object
+  # @abstract
+  class Configuration
+    # Generic configuration error
+    Error = Class.new(RuntimeError)
 
-    # Utility module to load instances of a class from a given path
+    # The file provided was not found
+    FileNotFoundError = Class.new(Error)
+
+    # The file loaded didn't returned an object form the expected type
+    TypeError = Class.new(Error)
+
+    # Raised when the configuration root path is unknown
+    RootPathUnknownError = Class.new(Error)
+
+    def initialize
+      if self.class.loading?
+        self.root = File.dirname(self.class.current_file)
+      end
+
+      yield self if block_given?
+    end
+
+    # Gets the object root path
     #
-    # A class might look like this:
+    # @return [Pathname] the root path
+    def root
+      raise RootPathUnknownError unless @root
+      @root
+    end
+
+    # Sets an object root path
+    # @see #root
     #
-    #   class Loadable
-    #     extend Loica::Build::Utils::LoadFromFile
-    #   end
-    #
-    #   # And now you can load an instance from a file with:
-    #   Loadable.load_from(some_path)
-    #
-    module LoadFromFile
-      # General error ocurred while loading a file from path
-      Error = Class.new(RuntimeError)
+    # @param path [Pathname,String] the new path
+    def root=(path)
+      @root = Pathname(path)
+    end
 
-      # The file provided was not found
-      FileNotFoundError = Class.new(Error)
-
-      # The file loaded didn't returned an object form the expected type
-      TypeError = Class.new(Error)
-
-
+    class << self
       # Load an instance of the current class from file
       #
       # @param file [#to_s] the file's path to load
@@ -34,9 +50,9 @@ module Loica::Build
           raise FileNotFoundError, "file \"#{file}\" not found"
         end
 
-        LoadFromFile.current_file = file
+        self.current_file = file
         object = eval File.read(file), binding, file
-        LoadFromFile.current_file = nil
+        self.current_file = nil
 
         unless object.kind_of? self
           raise TypeError, "expected #{file} to declare a #{self.name} but declared a #{object.class.name}"
@@ -48,20 +64,20 @@ module Loica::Build
       # Tells if a file is currently being loaded
       #
       # @return [Boolean] is a file being loaded?
-      def self.loading?
+      def loading?
         !!self.current_file
       end
 
       # Get's the path of the file being currently loaded
       #
       # @return [String,nil] the file being loaded path or nil if nothing is being loaded
-      def self.current_file
+      def current_file
         Thread.current[self.name]
       end
 
       protected
         # Set's the file being loaded.
-        def self.current_file=(file)
+        def current_file=(file)
           Thread.current[self.name] = file
         end
     end
