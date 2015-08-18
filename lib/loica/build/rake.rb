@@ -1,5 +1,6 @@
 require 'loica/build'
 
-application = Loica::Build::Application.load_from(File.join(Dir.pwd,'application.rake'))
+%w{application mruby targets}.each do |tasks|
+load File.expand_path("../rake/#{tasks}.rake", __FILE__)
+end
 
-raise application.inspect

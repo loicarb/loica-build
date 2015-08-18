@@ -14,12 +14,12 @@ module Loica::Build
     # Raised when the configuration root path is unknown
     RootPathUnknownError = Class.new(Error)
 
-    def initialize
+    def initialize(&block)
       if self.class.loading?
         self.root = File.dirname(self.class.current_file)
       end
 
-      yield self if block_given?
+      instance_exec(self,&block) if block
     end
 
     # Gets the object root path

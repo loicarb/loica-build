@@ -34,7 +34,15 @@ module Loica::Build # :nodoc:
 
     # @see #platform
     def platform=(platform)
-      @platform = platform
+      @platform = Platform.build(platform)
+    end
+
+    def name
+      self.root.basename.to_s
+    end
+
+    def crossbuilds
+      @crossbuilds ||= self.platform.crosbuilds_for(self)
     end
   end
 end

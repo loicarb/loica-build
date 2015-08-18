@@ -27,10 +27,12 @@ describe Loica::Build::Configuration do
 
     it 'yields it self when initialized' do
       check = false
+      spec = self
 
       ConfigurationSample.new do |conf|
         check = true
-        expect(conf).to be_kind_of(ConfigurationSample)
+        spec.expect(conf).to spec.be_kind_of(ConfigurationSample)
+        spec.expect(self).to spec.be_kind_of(ConfigurationSample)
       end
 
       expect(check).to be(true)
