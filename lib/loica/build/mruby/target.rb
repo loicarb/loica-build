@@ -1,17 +1,8 @@
 module Loica::Build
   module MRuby
-    class Target < Gem
-      def initialize(&block)
-        super(nil,&block)
-      end
-
-      def setup
-        self.licenses = 'Private'
-        self.authors = ''
-        target_name = File.basename(self.dir)
-        self.name = "target-#{target_name}"
-
-        super
+    class Target < ApplicationGem
+      def name
+        @name ||= "target-#{dir_name}"
       end
     end # class Target
   end # module MRuby
