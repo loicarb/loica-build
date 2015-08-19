@@ -12,7 +12,7 @@ module Loica::Build
       def crosbuilds_for(target)
         [
           # Device
-          ::MRuby::CrossBuild.new(File.join(target.name,'Devise')) do |conf|
+          ::MRuby::CrossBuild.new(File.join(target.name,'devise')) do |conf|
             toolchain :clang
 
             [conf.cc, conf.cxx, conf.objc].each do |cc|
@@ -25,6 +25,9 @@ module Loica::Build
               cc.flags << %Q[-fmessage-length=0 -std=gnu99 -fpascal-strings -fexceptions -fasm-blocks -gdwarf-2]
               cc.flags << %Q[-fobjc-abi-version=2]
             end
+
+            conf.linker.command = XCODE_PATH + '/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld'
+            conf.archiver.command = XCODE_PATH + '/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar'
 
             conf.gem target.root
           end
