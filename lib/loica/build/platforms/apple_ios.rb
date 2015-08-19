@@ -25,6 +25,8 @@ module Loica::Build
               cc.flags << %Q[-fmessage-length=0 -std=gnu99 -fpascal-strings -fexceptions -fasm-blocks -gdwarf-2]
               cc.flags << %Q[-fobjc-abi-version=2]
             end
+
+            conf.gem target.root
           end
           # TODO: Simulator build
           #  ::MRuby::CrossBuild.new(File.join(target.name,'Simulator')) do |conf|

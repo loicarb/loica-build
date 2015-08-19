@@ -26,6 +26,8 @@ module Loica::Build
 
           ::MRuby::CrossBuild.new(File.join(target.name,abi)) do |conf|
             toolchain :androideabi
+
+            conf.gem target.root
           end
         end
       end

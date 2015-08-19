@@ -24,6 +24,8 @@ module Loica::Build
             conf.cxx.command = EMLD
             conf.linker.command = EMLD
             conf.archiver.command = EMAR
+
+            conf.gem target.root
           end
         ]
       end
