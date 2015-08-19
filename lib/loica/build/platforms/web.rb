@@ -8,6 +8,10 @@ module Loica::Build
       EMLD = File.join(EMSCRIPTEN_DIR, 'bin', 'emcc')
       EMAR = File.join(EMSCRIPTEN_DIR, 'bin', 'emar')
 
+      def enabled?
+        File.directory?(EMSCRIPTEN_DIR)
+      end
+
       def crosbuilds_for(target)
         [
           ::MRuby::CrossBuild.new(target.name) do |conf|

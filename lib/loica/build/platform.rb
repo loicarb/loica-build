@@ -7,6 +7,10 @@ module Loica::Build # :nodoc:
       raise NotImplementedError
     end
 
+    def enabled?
+      false
+    end
+
     class << self
       def build(platform)
         case platform

@@ -12,6 +12,10 @@ module Loica::Build
         %w{ x86_64 x86 }
       ]
 
+      def enabled?
+        File.directory?(ANDROID_NDK)
+      end
+
       def crosbuilds_for(target)
         ENV['ANDROID_NDK_HOME'] = ANDROID_NDK
         ENV['GCC_VERSION'] = '4.9'

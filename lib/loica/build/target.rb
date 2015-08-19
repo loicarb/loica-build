@@ -41,6 +41,10 @@ module Loica::Build # :nodoc:
       self.root.basename.to_s
     end
 
+    def enabled?
+      self.platform.enabled?
+    end
+
     def crossbuilds
       @crossbuilds ||= self.platform.crosbuilds_for(self)
     end

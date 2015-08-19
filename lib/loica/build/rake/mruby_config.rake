@@ -11,4 +11,6 @@ MRuby::Build.new do |conf|
 end
 
 # Setup MRuby crossbuilds for each target
-CURRENT_APPLICATION.targets.each(&:crossbuilds)
+CURRENT_APPLICATION.targets.each do |target|
+  target.crossbuilds if target.enabled?
+end
