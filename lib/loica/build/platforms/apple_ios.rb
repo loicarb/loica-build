@@ -27,7 +27,8 @@ module Loica::Build
             end
 
             conf.linker.command = XCODE_PATH + '/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld'
-            conf.archiver.command = XCODE_PATH + '/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar'
+            conf.archiver.command = XCODE_PATH + '/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool'
+            conf.archiver.archive_options = '-o %{outfile} %{objs}'
 
             conf.gem target.root
           end
