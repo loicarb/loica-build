@@ -1,34 +1,25 @@
-module Loica::Build
-  module Platforms
+module Loica::Build # :nodoc:
+  module Platforms # :nodoc:
+
+    # The Web platform build apps for browsers
     class Web < Platform
-      # TODO: Dynamic lookup of EMSCRIPTEN_DIR
-      EMSCRIPTEN_DIR = '/usr/local/opt/emscripten'
-      EMCC = File.join(EMSCRIPTEN_DIR, 'bin', 'emcc')
-      EMXX = File.join(EMSCRIPTEN_DIR, 'bin', 'em++')
-      EMLD = File.join(EMSCRIPTEN_DIR, 'bin', 'emcc')
-      EMAR = File.join(EMSCRIPTEN_DIR, 'bin', 'emar')
 
       def enabled?
-        File.directory?(EMSCRIPTEN_DIR)
+        Toolchains::Emscripten.available?
       end
 
       def crosbuilds_for(target)
+        Toolchains::Emscripten.register!
+
         [
-          ::MRuby::CrossBuild.new(target.name) do |conf|
-            toolchain :clang
-
-            conf.cc do |cc|
-              cc.command = EMCC
-            end
-
-            conf.cxx.command = EMLD
-            conf.linker.command = EMLD
-            conf.archiver.command = EMAR
+          MRuby::CrossBuild.new(target.name) do |conf|
+            toolchain Toolchains::Emscripten.name
 
             conf.gem target.root
           end
         ]
       end
-    end
-  end
-end
+
+    end # class Web
+  end # module Platforms
+end # module Loica::Build
