@@ -10,22 +10,17 @@ module Loica::Build
 
       def crosbuilds_for(target)
         [
-          # Device
-          MRuby::CrossBuild.new(File.join(target.name,'devise')) do |conf|
-            conf.params[:sdk] = :iPhoneOS
-            toolchain Toolchains::XCode.name
-
-            conf.gem target.root
-          end,
-
-          # Simulator
-          MRuby::CrossBuild.new(File.join(target.name,'simulator')) do |conf|
-            conf.params[:sdk] = :iPhoneSimulator
+          #   type      sdk
+          %w{ devise    iPhoneOS },
+          %w{ simulator iPhoneSimulator }
+        ].map do |type, sdk|
+          MRuby::CrossBuild.new(File.join(target.name,type)) do |conf|
+            conf.params[:sdk] = sdk
             toolchain Toolchains::XCode.name
 
             conf.gem target.root
           end
-        ]
+        end
       end
     end
   end
