@@ -7,9 +7,27 @@ module Loica::Build # :nodoc:
       raise NotImplementedError
     end
 
+    def toolchain
+      raise NotImplementedError
+    end
+
+
     def enabled?
       false
     end
+
+    private
+      # Builds a Crossbuild object
+      def crossbuild_with(target, sufix=nil, params={})
+        toolchain.register!
+        name = sufix ? File.join(target.name,sufix) : target.name
+
+        MRuby::CrossBuild.new(name) do |conf|
+          conf.params = params
+          toolchain toolchain.name
+          conf.gem target.root
+        end
+      end
 
     class << self
       def build(platform)

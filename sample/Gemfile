@@ -1,3 +1,4 @@
 source 'https://rubygems.org'
 
 gem 'loica-build', path: '..'
+gem 'mruby-source', github: 'sagmor/mruby', branch: 'gem'
