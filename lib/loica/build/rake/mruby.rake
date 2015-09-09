@@ -8,4 +8,4 @@ ENV['MRUBY_BUILD_DIR'] = CURRENT_APPLICATION.root.join('build', 'mruby').to_s
 ENV['MRUBY_CONFIG'] = File.expand_path('../mruby_config.rake', __FILE__)
 
 # load MRuby's Rakefile
-load MRuby::Source.path.join('Rakefile').to_s
+load MRuby::Source::ROOT.join('Rakefile').to_s
